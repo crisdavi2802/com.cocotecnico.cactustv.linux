@@ -1,0 +1,80 @@
+{
+  "name": "cactus-tv-linux-nativo",
+  "productName": "Cactus TV",
+  "desktopName": "cactus-tv.desktop",
+  "author": { "name": "Cocotecnico", "email": "soporte@cocotecnico.com" },
+  "homepage": "https://cactus-tv-web.pages.dev/",
+  "version": "1.0.0-rc.1",
+  "private": true,
+  "description": "Cactus TV portable nativo para Linux: nucleo JS de webOS/Tizen con adaptadores Linux propios",
+  "main": "linux/main.cjs",
+  "type": "commonjs",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron linux/main.cjs",
+    "backend": "node backend/server.js",
+    "build:linux": "electron-builder --linux --x64",
+    "build:appimage": "electron-builder --linux AppImage --x64",
+    "build:all": "electron-builder --linux AppImage deb rpm pacman --x64"
+  },
+  "build": {
+    "appId": "com.cocotecnico.cactustv.linux",
+    "productName": "Cactus TV",
+    "asar": true,
+    "directories": { "output": "release" },
+    "files": [
+      "linux/**/*",
+      "backend/**/*",
+      "build/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      { "from": "build/launcher.sh", "to": "launcher.sh" },
+      { "from": "build/after-install.sh", "to": "after-install.sh" }
+    ],
+    "asarUnpack": ["build/launcher.sh", "build/after-install.sh"],
+    "linux": {
+      "category": "AudioVideo;Video;",
+      "maintainer": "Cactus TV <soporte@cocotecnico.com>",
+      "executableName": "cactus-tv",
+      "icon": "build/icon.png",
+      "target": ["AppImage", "deb", "rpm", "pacman", "flatpak"],
+      "synopsis": "Cactus TV para Linux",
+      "description": "Cactus TV portable basada en las versiones de television.",
+      "syncDesktopName": true
+    },
+    "appImage": { "artifactName": "cactus-tv-${version}-${arch}.${ext}" },
+    "deb": {
+      "depends": ["ffmpeg"],
+      "afterInstall": "build/after-install.sh",
+      "packageCategory": "video"
+    },
+    "rpm": {
+      "depends": ["ffmpeg"],
+      "compression": "gzip",
+      "afterInstall": "build/after-install.sh"
+    },
+    "pacman": {
+      "depends": ["ffmpeg"]
+    },
+    "flatpak": {
+      "artifactName": "cactus-tv-${version}-${arch}.${ext}",
+      "runtimeVersion": "24.08",
+      "baseVersion": "24.08",
+      "finishArgs": [
+        "--socket=wayland",
+        "--socket=x11",
+        "--share=ipc",
+        "--device=dri",
+        "--socket=pulseaudio",
+        "--filesystem=home",
+        "--share=network",
+        "--talk-name=org.freedesktop.Notifications"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "45.2.2",
+    "electron-builder": "26.18.0"
+  }
+}

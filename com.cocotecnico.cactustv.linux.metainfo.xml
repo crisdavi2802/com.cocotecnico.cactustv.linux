@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.cocotecnico.cactustv.linux</id>
+  <name>Cactus TV</name>
+  <summary>Cliente de television en linea para Linux</summary>
+  <description>
+    <p>Cliente de escritorio para Linux del portal Cactus TV, basado en <em>cactus-tv-web.pages.dev</em>.</p>
+    <p>Incluye el motor JavaScript original adaptado a Linux: reproductor HLS con hls.js, soporte HEVC mediante ffmpeg/VAAPI del sistema y backend local que escucha unicamente en 127.0.0.1.</p>
+    <p>La ventana Electron se ejecuta con sandbox de Chromium, context isolation y nodeIntegration desactivado. El uso de enlaces, canales y contenidos es responsabilidad exclusiva de cada usuario.</p>
+  </description>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <developer_name>Cocotecnico</developer_name>
+  <launchable type="desktop-id">com.cocotecnico.cactustv.linux.desktop</launchable>
+  <url type="homepage">https://cactus-tv-web.pages.dev/</url>
+  <url type="bugtracker">https://github.com/crisdavi2802/CactusTV-Linux-Nativo/issues</url>
+  <url type="vcs-browser">https://github.com/crisdavi2802/CactusTV-Linux-Nativo</url>
+  <categories>
+    <category>AudioVideo</category>
+    <category>Video</category>
+  </categories>
+  <releases>
+    <release version="1.0.0-rc.1" date="2026-11-21">
+      <description>
+        <p>Primera version para Linux: correccion de canales HLS V04, sync de catalogo con menor consumo de CPU y sandbox reforzado.</p>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+</component>

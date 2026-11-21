@@ -1,0 +1,66 @@
+app-id: com.cocotecnico.cactustv.linux
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
+command: run.sh
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --share=network
+  - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
+  - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
+
+build-options:
+  append-path: /usr/lib/sdk/node22/bin
+  env:
+    NPM_CONFIG_LOGLEVEL: info
+
+modules:
+  - name: cactus-tv
+    buildsystem: simple
+    # El tarball del repo trae el fuente dentro de codigo/.
+    subdir: codigo
+    build-options:
+      env:
+        XDG_CACHE_HOME: /run/build/cactus-tv/flatpak-node/cache
+        npm_config_cache: /run/build/cactus-tv/flatpak-node/npm-cache
+        npm_config_offline: 'true'
+    build-commands:
+      # Dependencias desde el cache generado por flatpak-node-generator.
+      - npm install --offline
+      # electron-builder genera dist/linux-unpacked (sin target de paquete).
+      - |
+        . ../flatpak-node/electron-builder-arch-args.sh
+        npx electron-builder --linux --dir $ELECTRON_BUILDER_ARCH_ARGS
+      # Aplicacion, launcher y metadatos.
+      - cp -a release/linux-unpacked /app/main
+      - install -Dm755 -t /app/bin/ ../run.sh
+      - install -Dm644 com.cocotecnico.cactustv.linux.metainfo.xml /app/share/metainfo/com.cocotecnico.cactustv.linux.metainfo.xml
+      - install -Dm644 com.cocotecnico.cactustv.linux.desktop /app/share/applications/com.cocotecnico.cactustv.linux.desktop
+      - install -Dm644 build/icon.png /app/share/icons/hicolor/512x512/apps/com.cocotecnico.cactustv.linux.png
+    sources:
+      - type: archive
+        url: https://github.com/crisdavi2802/CactusTV-Linux-Nativo/archive/refs/tags/v1.0.0-rc.1.tar.gz
+        sha256: 14802d6f2342eba12fe07782f9c7cbb2d4fb00cb6ed930edadc7a683347deada
+        strip-components: 1
+      - generated-sources.json
+      - type: file
+        path: com.cocotecnico.cactustv.linux.metainfo.xml
+        dest: codigo
+      - type: file
+        path: com.cocotecnico.cactustv.linux.desktop
+        dest: codigo
+      - type: script
+        dest-filename: run.sh
+        commands:
+          - zypak-wrapper.sh /app/main/cactus-tv "$@"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Cactus TV
+Comment=Cliente de television en linea basado en cactus-tv-web.pages.dev
+Exec=run.sh
+Icon=com.cocotecnico.cactustv.linux
+Terminal=false
+Categories=AudioVideo;Video;
+StartupWMClass=Cactus TV
